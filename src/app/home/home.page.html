@@ -1,20 +1,35 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>ChatBot</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+    <div class="chats">
+      <div class="chatbox">
+        <div *ngFor="let chat of chats">
+          <div class="message sent" *ngIf="chat.type!=='bot' && chat.isMe">
+            {{chat.message}}
+            <span class="metadata">
+              <span class="time">{{chat.createdAt | date: 'HH:mm aaa'}}</span>
+            </span>
+          </div>
+          <div class="message received" *ngIf="chat.type =='bot' && !chat.isMe">
+            {{chat.message}}
+            <span class="metadata">
+              <span class="time">{{chat.createdAt | date: 'HH:mm aaa'}}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-footer>
+      <p text-center *ngIf="sending">sending...</p>
+      <div class="flex-items" padding>
+
+          <ion-input [(ngModel)]="message" name="message" class="input_message" placeholder="send message ..."></ion-input>
+          <ion-icon (click)="sendMessage()" class="send" name="send"></ion-icon>
+        </div>
+  </ion-footer>
 </ion-content>

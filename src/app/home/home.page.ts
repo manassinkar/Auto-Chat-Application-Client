@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChatModel } from '../../models/chatModel';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,13 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  public chats: ChatModel[] = [];
+  public message: string;
+  public sending: boolean = false;
   constructor() {}
 
+  sendMessage()
+  {
+
+  }
 }
