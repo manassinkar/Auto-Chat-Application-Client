@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ChatService {
 
+  public sessionID:number = 0;
   private _url = 'http://localhost:3000';
   private _channel : any;
   constructor(public http: HttpClient, private _pusher : PusherService) {
@@ -16,11 +17,13 @@ export class ChatService {
 
 
   sendMessage( message : string) : Observable<any>{
+    const sessionID = this.sessionID;
     const param = {
       type: 'human',
       message,
+      sessionID
     };
-    return this.http.post(`${this._url}/message`, param)
+    return this.http.post(`${this._url}/chat/message`, param)
   }
 
   getChannel(){
