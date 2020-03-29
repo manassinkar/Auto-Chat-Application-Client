@@ -32,13 +32,11 @@ export class OrdersPage implements OnInit {
       {
         this.loader.loading.dismiss();
         this.orders = orders;
-        console.log(this.orders);
       },
       error=>
       {
         this.loader.loading.dismiss();
         this.loader.presentAlert('Error', error.error.message);
-        console.log(error);
         this.router.navigateByUrl('/dashboard');
       }
     )
@@ -57,6 +55,11 @@ export class OrdersPage implements OnInit {
         return listorder;
       });
     }
+  }
+
+  back()
+  {
+    this.router.navigateByUrl('/dashboard');
   }
 
 }

@@ -39,7 +39,6 @@ export class RegisterPage implements OnInit {
       }, err => {
         setTimeout(() => {
           this.loader.loading.dismiss();
-          // console.log(err);
           this.loader.presentAlert('Error', err.error.message);
         }, 100);
       })

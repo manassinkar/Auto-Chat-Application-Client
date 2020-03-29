@@ -41,7 +41,6 @@ export class AuthService {
       {
         this.authenticationState.next(null);
       }
-      console.log(this.authenticationState.value);
     });
   }
 

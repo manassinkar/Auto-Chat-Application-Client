@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { LoaderService } from '../../services/loader.service';
 import { Router } from '@angular/router';
 import { UserModel } from '../../../models/userModel';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { UserModel } from '../../../models/userModel';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  backButtonSubscription;
 
   user: UserModel = {
     email: 'manas.sinkar@gmail.com',
@@ -21,7 +23,8 @@ export class LoginPage implements OnInit {
   constructor(
     public authService: AuthService,
     public loader: LoaderService,
-    public router: Router
+    public router: Router,
+    private plt: Platform
   ) {
   }
 
@@ -42,7 +45,6 @@ export class LoginPage implements OnInit {
       }, err => {
         setTimeout(() => {
           this.loader.loading.dismiss();
-          // console.log(err);
           this.loader.presentAlert('Error', err.error.message);
         }, 100);
       })
@@ -51,6 +53,16 @@ export class LoginPage implements OnInit {
   register()
   {
     this.router.navigateByUrl('/register');
+  }
+
+  ionViewDidEnter() {
+    this.backButtonSubscription = this.plt.backButton.subscribe(() => {
+      navigator['app'].exitApp();
+    });
+  }
+  
+  ionViewWillLeave() {
+    this.backButtonSubscription.unsubscribe();
   }
 
 }
