@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  server: 'http://localhost:3000'
+  server: 'https://auto-chat-server.herokuapp.com'
 };
 //http://localhost:3000
 

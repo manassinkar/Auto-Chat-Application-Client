@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Storage } from '@ionic/storage';
 import { map,filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ChatService } from './chat.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class AuthService {
   constructor(
     public http: HttpClient,
     public storage: Storage,
-    public router: Router
+    public router: Router,
+    public chatService: ChatService
   ) {
     this.user = this.authenticationState.asObservable().pipe(
       filter(response => response)
@@ -26,7 +28,6 @@ export class AuthService {
 
   loadUser()
   {
-    console.log('Load User Called');
     let token = '';
     this.storage.get('token').then((tk) =>
     {
@@ -34,7 +35,7 @@ export class AuthService {
       if(token!=null)
       {
         this.authenticationState.next({ 'token': token });
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/dashboard');
       }
       else
       {
@@ -75,6 +76,7 @@ export class AuthService {
 
   async logout()
   {
+    this.chatService.disconnect();
     await this.storage.set('token',null);
     this.authenticationState.next(null);
   }

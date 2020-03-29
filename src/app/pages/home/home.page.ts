@@ -78,22 +78,17 @@ export class HomePage implements OnInit {
     this.authService.isNewUser().subscribe(
       res =>
       {
-        console.log(res);
         this.isNewUser = res['new'];
       },
       error =>
       {
-        console.log(error);
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/dashboard');
       }
     )
   }
 
-  logout()
+  back()
   {
-    this.authService.logout().then(() =>
-    {
-      this.router.navigateByUrl('/login');
-    });
+    this.router.navigateByUrl('/dashboard');
   }
 }

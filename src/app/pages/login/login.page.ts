@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
       .subscribe(res => {
         setTimeout(() => {
           this.loader.loading.dismiss();
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/dashboard');
         }, 100);
       }, err => {
         setTimeout(() => {

@@ -5,18 +5,18 @@
       <ion-button (click)="updateNewOrOld(true)" *ngIf="!newSet">
         <ion-text>New Order</ion-text>
       </ion-button>
-      <ion-button *ngIf="!newSet">
+      <ion-button *ngIf="!newSet && !isNewUser">
         <ion-text>|</ion-text>
       </ion-button>
       <ion-button *ngIf="newSet">
         <ion-text *ngIf="new">New Order</ion-text>
         <ion-text *ngIf="!new">Order Based on Preference</ion-text>
       </ion-button>
-      <ion-button (click)="updateNewOrOld(false)" *ngIf="!newSet"> <!---*ngIf="!isNewUser"--->
+      <ion-button (click)="updateNewOrOld(false)" *ngIf="!newSet && !isNewUser"> <!---*ngIf="!isNewUser"--->
         <ion-text>Preference</ion-text>
       </ion-button>
-      <ion-button (click)="logout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

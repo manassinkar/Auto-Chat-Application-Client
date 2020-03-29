@@ -27,7 +27,6 @@ export class ChatService {
 
   async init()
   {
-    console.log('Init');
     this.chats = [];
     this.socket.disconnect();
     this.socket.connect();
@@ -49,9 +48,15 @@ export class ChatService {
     });
     this.socket.on('end',() =>
     {
+      this.disconnect();
       this.sending = false;
       this.recieving = false;
     });
+  }
+
+  disconnect()
+  {
+    this.socket.disconnect();
   }
 
   messageNew(message)
