@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ChatModel } from '../../models/chatModel';
-import { Observable } from 'rxjs';
 import { Storage } from '@ionic/storage';
-import { environment } from '../../environments/environment';
 import { Socket } from 'ngx-socket-io';
 
 @Injectable({
@@ -15,20 +13,18 @@ export class ChatService {
   public recieving: boolean = false;
   public sessionID:number = 0;
   public chats: ChatModel[] = [];
-  private _url = environment.server;
 
-  private _channel : any;
   constructor(
     public http: HttpClient,
-    public socket: Socket,
-    public storage: Storage
+    public storage: Storage,
+    public socket: Socket
   ) {
   }
 
   async init()
   {
     this.chats = [];
-    this.socket.disconnect();
+    this.disconnect();
     this.socket.connect();
     let token = await this.storage.get('token');
     this.socket.emit('init',token);
@@ -49,14 +45,20 @@ export class ChatService {
     this.socket.on('end',() =>
     {
       this.disconnect();
-      this.sending = false;
-      this.recieving = false;
     });
   }
 
   disconnect()
   {
+    this.socket.removeAllListeners();
+    this.sending = false;
+    this.recieving = false;
     this.socket.disconnect();
+  }
+
+  clearChat()
+  {
+    this.chats = [];
   }
 
   messageNew(message)

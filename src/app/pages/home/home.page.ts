@@ -26,13 +26,23 @@ export class HomePage implements OnInit {
     
   ){ }
 
-  ngOnInit()
+  ionViewDidEnter()
   {
     this.chatService.init();
+    this.ngOnInit();
+  }
+
+  ngOnInit()
+  {
     this.disable = true;
-    setTimeout(()=>{
-      this.isNew();
-    },1000)
+    this.isNewUser = true;
+    this.new = true;
+    this.newSet = false;
+    this.isNew();
+    this.chatService.socket.on('end',()=>
+    {
+      this.disable = true;
+    });
   }
 
   sendMessage()
@@ -89,6 +99,8 @@ export class HomePage implements OnInit {
 
   back()
   {
+    this.chatService.disconnect();
+    this.chatService.clearChat();
     this.router.navigateByUrl('/dashboard');
   }
 }
